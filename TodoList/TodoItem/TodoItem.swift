@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+struct TodoItem {
+    let name: String
+}
