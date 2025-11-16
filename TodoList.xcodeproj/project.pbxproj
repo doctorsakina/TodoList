@@ -18,7 +18,7 @@
 		D06759A52EB8CF6900FF026F /* TodoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06759A42EB8CF6900FF026F /* TodoDetailViewController.swift */; };
 		D067B9A92EBA4D490057F11B /* TodoToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D067B9A82EBA4D490057F11B /* TodoToggle.swift */; };
 		D0CAB0592EB23F4100404E2A /* TodoListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CAB0582EB23F4100404E2A /* TodoListHeaderView.swift */; };
-		D0E59F672EC8C39100BE4811 /* TodoItemEntity.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D0E59F652EC8C39100BE4811 /* TodoItemEntity.xcdatamodeld */; };
+		D0E59F672EC8C39100BE4811 /* TodoList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D0E59F652EC8C39100BE4811 /* TodoList.xcdatamodeld */; };
 		D0E59F692EC8EA8900BE4811 /* TodoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E59F682EC8EA8900BE4811 /* TodoItem.swift */; };
 		D0E59F6B2EC8EADD00BE4811 /* TodoItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E59F6A2EC8EADD00BE4811 /* TodoItemTableViewCell.swift */; };
 /* End PBXBuildFile section */
@@ -92,7 +92,7 @@
 			children = (
 				D038F4042EC207A8002AFCD9 /* PersistenceController.swift */,
 				D02D47272EC392A50003421D /* TodoListStore.swift */,
-				D0E59F652EC8C39100BE4811 /* TodoItemEntity.xcdatamodeld */,
+				D0E59F652EC8C39100BE4811 /* TodoList.xcdatamodeld */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -185,7 +185,7 @@
 				D02D47282EC392A50003421D /* TodoListStore.swift in Sources */,
 				D02CB0762EAF8EE800DFE9F4 /* TodoListViewController.swift in Sources */,
 				D0CAB0592EB23F4100404E2A /* TodoListHeaderView.swift in Sources */,
-				D0E59F672EC8C39100BE4811 /* TodoItemEntity.xcdatamodeld in Sources */,
+				D0E59F672EC8C39100BE4811 /* TodoList.xcdatamodeld in Sources */,
 				D0E59F692EC8EA8900BE4811 /* TodoItem.swift in Sources */,
 				D02CB0722EAF8EE800DFE9F4 /* AppDelegate.swift in Sources */,
 				D02CB0742EAF8EE800DFE9F4 /* SceneDelegate.swift in Sources */,
@@ -419,13 +419,13 @@
 /* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
-		D0E59F652EC8C39100BE4811 /* TodoItemEntity.xcdatamodeld */ = {
+		D0E59F652EC8C39100BE4811 /* TodoList.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
 				D0E59F662EC8C39100BE4811 /* TodoItem.xcdatamodel */,
 			);
 			currentVersion = D0E59F662EC8C39100BE4811 /* TodoItem.xcdatamodel */;
-			path = TodoItemEntity.xcdatamodeld;
+			path = TodoList.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

@@ -12,16 +12,18 @@ import CoreData
 class TodoListViewController : UIViewController {
     
     let context: NSManagedObjectContext
+       
     
     var todoEntities: [TodoItemEntity] = []
     
     var todoItems: [TodoItem] = [
         .init(name:"Купить сыр"),
-        .init(name:"Банальные, но неопровержимые выводы, а также акционеры крупнейших компаний и по..."),
-            .init(name: "Задание")
+        .init(name:"Банальные, но неопровержимые выводы, а также акционеры крупнейших компаний и по"),
+        .init(name: "Задание")
     ]
     
-    lazy var  tableView : UITableView = {
+    lazy var tableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .insetGrouped)
         tableView.register(TodoListHeaderView.self, forHeaderFooterViewReuseIdentifier: "my header")
         tableView.register(TodoItemTableViewCell.self, forCellReuseIdentifier: "my cell")
         tableView.dataSource = self
@@ -29,7 +31,6 @@ class TodoListViewController : UIViewController {
         view.addSubview(tableView)
         return tableView
     } ()
-     
     
     lazy var addButton : UIButton = {
         let button = UIButton(type: .system)
@@ -45,6 +46,8 @@ class TodoListViewController : UIViewController {
     init(context: NSManagedObjectContext) {
         self.context = context
         super.init(nibName: nil, bundle: nil)
+        print("✅ TodoListViewController created with context")
+        
     }
     
     required init?(coder: NSCoder) {
@@ -60,7 +63,7 @@ class TodoListViewController : UIViewController {
         
         makeConstraints()
         loadTodoEntities()
-    
+        
         //        view.backgroundColor = .systemBackground
         
         // Транзишен
@@ -72,24 +75,24 @@ class TodoListViewController : UIViewController {
         
         toolbarItems = [UIBarButtonItem(systemItem: .flexibleSpace), addButton, UIBarButtonItem(systemItem: .flexibleSpace)]
         
-       
+        
         
     }
     
-              func makeConstraints() {
-                  tableView.snp.makeConstraints { make in
-                      make.edges.equalToSuperview()
-                  }
-                  addButton.snp.makeConstraints { make in make.size.equalTo(36)
-                  }
-              }
+    func makeConstraints() {
+        tableView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        addButton.snp.makeConstraints { make in make.size.equalTo(36)
+        }
+    }
     
     func loadTodoEntities() {
-
-        let request: NSFetchRequest<TodoItemEntity> = todoItemEntity.fetchRequest()
-
+        
+        let request: NSFetchRequest<TodoItemEntity> = TodoItemEntity.fetchRequest()
+        
         context.perform {
-
+            
             do {
                 let fetchedData = try self.context.fetch(request)
                 DispatchQueue.main.async {
@@ -105,27 +108,24 @@ class TodoListViewController : UIViewController {
             }
         }
     }
-
-            
+    
+    
     func setInitialTodosIfNeeded() {
         context.perform {
             for sample in self.todoEntities {
-                let entity = todoEntities(context: self.context)
+                let entity = TodoItemEntity(context: self.context)
                 entity.isCompleted = sample.isCompleted
             }
-
+            
             do {
-                try self.context.save{
-               
-                }
-                
-                } catch {
+                try self.context.save()
+            } catch {
                 print("Initial setting error: \(error)")
             }
             self.loadTodoEntities()
         }
     }
-
+    
     func handleTodoCompletion (at index: Int) {
         let entity = todoEntities[index]
         
@@ -136,62 +136,122 @@ class TodoListViewController : UIViewController {
                 try self.context.save()
                 DispatchQueue.main.async {
                     self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
-                    self.tableView.reloadSections(IndexSet(integer: 0), with: .none)                }
+                    self.tableView.reloadSections(IndexSet(integer: 0), with: .none)
+                }
             } catch {
                 print("Toggle save error: \(error)")
             }
         }
     }
-
+    
     
     func presentDetailScreen( _ item: TodoItem? = nil) {
-      let vc = TodoDetailViewController()
+        let vc = TodoDetailViewController()
         vc.todoItem = item
         vc.onFinish = { newItem in
             self.todoItems.append(newItem)
             self.tableView.reloadData()
-    }
+        }
         let nc = UINavigationController(rootViewController: vc)
         present(nc, animated:true)
-
+        
     }
-
+    
+    // HOME WORK
+    
+    //  func addTodoItem() {
+    //    let alert = UIAlertController(title: "New TodoItem", message: nil, preferredStyle: .alert)
+    //    alert.addTextField { $0.placeholder = "Enter text" }
+    //    alert.addAction(UIAlertAction(title: "Add", style: .default, handler: { _ in
+    //        guard let text = alert.textFields?.first?.text, !text.isEmpty else { return }
+    //        PersistenceController.shared.todoEntities(text: text)
+    //        self.todoEntities = PersistenceController.shared.fetchTodos()
+    //        self.tableView.reloadData()
+    //    } ))
+    //
+    //    alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+    //    present(alert, animated: true)
+    //}
+    //
+    //
+    //
+    //func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle,
+    //               forRowAt indexPath: IndexPath) {
+    //    if editingStyle == .delete {
+    //        let entity = todoEntities[indexPath.row]
+    //
+    //        // Удаляем из Core Data
+    //        PersistenceController.shared.delete(todo: todoEntities)
+    //
+    //        // Удаляем из массива для UI
+    //        todoEntities.remove(at: indexPath.row)
+    //        tableView.deleteRows(at: [indexPath], with: .automatic)
+    //    }
+    //}
+    //
+    ///
+    ///
+    ///
+    ///
+    ///
+    ///
+    ///
+    
+    //    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle,
+    //                   forRowAt indexPath: IndexPath) {
+    //        if editingStyle == .delete {
+    //            let todo = todoEntities[indexPath.row]
+    //            TodoListStore.delete(TodoItemEntity)
+    //            todoEntities.remove(at: indexPath.row)
+    //            tableView.deleteRows(at: [indexPath], with: .automatic)
+    //        }
+    //    }
+    //
+    //    TodoListStore.toggleDone(todoEntities[indexPath.row])
+    //    tableView.reloadRows(at: [indexPath], with: .automatic)
+    //
+    //    let newTodo = TodoListStore.createTodo(name: "Новая заметка")
+    //    todoEntities.append(newTodo)
+    //    tableView.reloadData()
+    
+    
     @objc func addTapped()  {
-    presentDetailScreen()
-
-   }
-}
-
-extension TodoListViewController: UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return todoEntities.count
+        presentDetailScreen()
+        
     }
+}
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell (withIdentifier: "my cell", for: indexPath) as! TodoItemTableViewCell
+    extension TodoListViewController: UITableViewDataSource {
         
-        let entity = todoEntities[indexPath.row]
+        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+            return todoEntities.count
+        }
         
-        cell.selectionStyle = .none
-        cell.configure(entity.name ?? "", isCompleted: entity.isCompleted)
-        
-                cell.onToggleCompletion = { [weak self, weak cell] in
-                    guard let self = self, let cell = cell ,let currentIndexRath = tableView.indexPath(for: cell)
-                    else {return}
-                    self.handleTodoCompletion(at: currentIndexPath.row)
-                    self.todoItems[currentIndexPath.row].isCompleted.toggle()
-                }
-                return cell
+        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+            let cell = tableView.dequeueReusableCell (withIdentifier: "my cell", for: indexPath) as! TodoItemTableViewCell
+            
+            let entity = todoEntities[indexPath.row]
+            
+            cell.selectionStyle = .none
+            cell.configure(entity.name ?? "", isCompleted: entity.isCompleted)
+            
+            cell.onToggleCompletion = { [weak self, weak cell] in
+                guard let self = self, let cell = cell ,
+                      let currentIndexPath = tableView.indexPath(for: cell)
+                else {return}
+                self.handleTodoCompletion(at: currentIndexPath.row)
+                self.todoEntities[currentIndexPath.row].isCompleted.toggle()
+            }
+            return cell
+        }
+    }
+
+        extension TodoListViewController: UITableViewDelegate {
+            
+            func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+                let view  = tableView.dequeueReusableHeaderFooterView( withIdentifier: "my header") as! TodoListHeaderView
+                view.updateTaskCount( count: todoItems.count)
+                return view
             }
         }
         
-        
-        extension TodoListViewController: UITableViewDelegate {
-        
-            func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-          let view  = tableView.dequeueReusableHeaderFooterView( withIdentifier: "my header") as! TodoListHeaderView
-            view.updateTaskCount( count: TodoItems.count)
-            return view
-               }
-    }

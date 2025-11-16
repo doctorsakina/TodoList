@@ -11,7 +11,13 @@ import CoreData
 
 class TodoItemTableViewCell: UITableViewCell {
     
-    let checkButton = UIImageView(image: UIImage(systemName: "circle"))
+    
+    var onToggleCompletion: (() -> Void)?
+
+
+    let checkButton = UIButton()
+    let checkmarkCircle = UIImageView(image: UIImage(systemName: "checkmarkCircle"))
+    let circleImageView = UIImageView(image: UIImage(systemName: "circle"))
     let titleLabel = UILabel()
     let chevronImageView = UIImageView(image: UIImage(systemName: "chevron.right"))
     
@@ -25,19 +31,19 @@ class TodoItemTableViewCell: UITableViewCell {
         setupUI()
         
         setNeedsUpdateConstraints()
-     }
+    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     
     override var isSelected : Bool{
         didSet {
-//            circleImageView.image = isSelected
+            //            circleImageView.image = isSelected
         }
     }
-
+    
     func setupUI() {
         checkButton.tintColor = .tertiaryLabel
         checkButton.contentMode = .scaleAspectFit
@@ -47,6 +53,12 @@ class TodoItemTableViewCell: UITableViewCell {
         
         checkButton.addTarget(self, action: #selector(handleTap), for: .touchUpInside)
     }
+    
+    
+    @objc private func checkButtonTapped() {
+        onToggleCompletion?()   // <-- ВАЖНО!
+    }
+    
     
     func configure(_ title: String, isCompleted:Bool) {
         
@@ -66,38 +78,45 @@ class TodoItemTableViewCell: UITableViewCell {
             titleLabel.attributedText = attributeString
             
         } else {
-            checkButton.image = (UIImage(contentsOfFile: "circle"))
+            let image = UIImage(named: "circle")
+            checkButton.setImage(image, for: .normal)
             checkButton.tintColor = .tertiaryLabel
             
             titleLabel.textColor = .label
             titleLabel.attributedText = NSAttributedString(string: title)
         }
     }
-           
+    
     
     override func updateConstraints() {
         checkButton.snp.updateConstraints { make in make.leading.verticalEdges.equalToSuperview().inset(16)
             make.size.equalTo(22)
         }
-    
-        checkButton.snp.updateConstraints { make in
-        make.leading.equalTo(checkButton.snp.trailing).offset(8)
-        make.verticalEdges.equalToSuperview().inset(16)
+        
+        titleLabel.snp.updateConstraints { make in
+            make.leading.equalTo(checkButton.snp.trailing).offset(8)
+            make.verticalEdges.equalToSuperview().inset(16)
         }
         
         chevronImageView.snp.updateConstraints { make in
             make.verticalEdges.trailing.equalToSuperview().inset(16)
-            }
+        }
         super.updateConstraints()
     }
     
     @objc func handleTap() {
-        checkButton.setImage(UIImage(systemName: "checkmark.circle.image") , for: .normal)
-            checkButton.tintColor = UIColor(named: "successColor")
+        // Берем изображение из Assets
+        let image = UIImage(named: "checkmarkCircle")
+        
+        // Устанавливаем на кнопку
+        checkButton.setImage(image, for: .normal)
+        
+        // Цвет (если изображение шаблонное)
+        checkButton.tintColor = UIColor(named: "successColor")
     }
 }
-
-        // REVOLUT
+    
+    // REVOLUT
     // Identificator
-
-//UITableViewCell
+    
+    //UITableViewCell

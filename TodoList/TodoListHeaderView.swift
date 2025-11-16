@@ -34,6 +34,11 @@ class TodoListHeaderView: UITableViewHeaderFooterView {
         showButton.setTitle ("Show", for: .normal)
         showButton.setTitleColor(.blue, for: .normal)
     }
+   
+    
+    func updateTaskCount(count: Int) {
+        taskName.text = "Tasks: \(count)"
+    }
     
     override func updateConstraints() {
         
