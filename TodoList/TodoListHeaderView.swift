@@ -42,11 +42,13 @@ class TodoListHeaderView: UITableViewHeaderFooterView {
     
     override func updateConstraints() {
         
-        taskName.snp.updateConstraints { make in make.trailing.equalToSuperview().inset(16)
+        taskName.snp.updateConstraints { make in
+            make.leading.equalToSuperview().inset(16)
             make.verticalEdges.equalToSuperview()
         }
         
-        showButton.snp.updateConstraints { make in make.trailing.equalToSuperview().inset(16)
+        showButton.snp.updateConstraints { make in
+            make.trailing.equalToSuperview().inset(16)
             make.verticalEdges.equalToSuperview()
         }
         super.updateConstraints()

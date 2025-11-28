@@ -15,11 +15,12 @@
 		D02CB0872EAF900400DFE9F4 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = D02CB0862EAF900400DFE9F4 /* SnapKit */; };
 		D02D47282EC392A50003421D /* TodoListStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02D47272EC392A50003421D /* TodoListStore.swift */; };
 		D038F4052EC207A8002AFCD9 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D038F4042EC207A8002AFCD9 /* PersistenceController.swift */; };
+		D04E5FBD2ECA404A00A91629 /* TodoItem.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D0E59F652EC8C39100BE4811 /* TodoItem.xcdatamodeld */; };
+		D04E5FBF2ECA474D00A91629 /* TodoItem +CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04E5FBE2ECA474D00A91629 /* TodoItem +CoreDataClass.swift */; };
+		D04E5FC12ECA476D00A91629 /* TodoItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04E5FC02ECA476D00A91629 /* TodoItem+CoreDataProperties.swift */; };
 		D06759A52EB8CF6900FF026F /* TodoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06759A42EB8CF6900FF026F /* TodoDetailViewController.swift */; };
 		D067B9A92EBA4D490057F11B /* TodoToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D067B9A82EBA4D490057F11B /* TodoToggle.swift */; };
 		D0CAB0592EB23F4100404E2A /* TodoListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CAB0582EB23F4100404E2A /* TodoListHeaderView.swift */; };
-		D0E59F672EC8C39100BE4811 /* TodoList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D0E59F652EC8C39100BE4811 /* TodoList.xcdatamodeld */; };
-		D0E59F692EC8EA8900BE4811 /* TodoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E59F682EC8EA8900BE4811 /* TodoItem.swift */; };
 		D0E59F6B2EC8EADD00BE4811 /* TodoItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E59F6A2EC8EADD00BE4811 /* TodoItemTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -33,11 +34,12 @@
 		D02CB07F2EAF8EEB00DFE9F4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D02D47272EC392A50003421D /* TodoListStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListStore.swift; sourceTree = "<group>"; };
 		D038F4042EC207A8002AFCD9 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
+		D04E5FBE2ECA474D00A91629 /* TodoItem +CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TodoItem +CoreDataClass.swift"; sourceTree = "<group>"; };
+		D04E5FC02ECA476D00A91629 /* TodoItem+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TodoItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		D06759A42EB8CF6900FF026F /* TodoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDetailViewController.swift; sourceTree = "<group>"; };
 		D067B9A82EBA4D490057F11B /* TodoToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoToggle.swift; sourceTree = "<group>"; };
 		D0CAB0582EB23F4100404E2A /* TodoListHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListHeaderView.swift; sourceTree = "<group>"; };
 		D0E59F662EC8C39100BE4811 /* TodoItem.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TodoItem.xcdatamodel; sourceTree = "<group>"; };
-		D0E59F682EC8EA8900BE4811 /* TodoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItem.swift; sourceTree = "<group>"; };
 		D0E59F6A2EC8EADD00BE4811 /* TodoItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItemTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -92,7 +94,9 @@
 			children = (
 				D038F4042EC207A8002AFCD9 /* PersistenceController.swift */,
 				D02D47272EC392A50003421D /* TodoListStore.swift */,
-				D0E59F652EC8C39100BE4811 /* TodoList.xcdatamodeld */,
+				D0E59F652EC8C39100BE4811 /* TodoItem.xcdatamodeld */,
+				D04E5FC02ECA476D00A91629 /* TodoItem+CoreDataProperties.swift */,
+				D04E5FBE2ECA474D00A91629 /* TodoItem +CoreDataClass.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -101,7 +105,6 @@
 			isa = PBXGroup;
 			children = (
 				D02CB0712EAF8EE800DFE9F4 /* AppDelegate.swift */,
-				D0E59F682EC8EA8900BE4811 /* TodoItem.swift */,
 			);
 			path = TodoItem;
 			sourceTree = "<group>";
@@ -185,13 +188,14 @@
 				D02D47282EC392A50003421D /* TodoListStore.swift in Sources */,
 				D02CB0762EAF8EE800DFE9F4 /* TodoListViewController.swift in Sources */,
 				D0CAB0592EB23F4100404E2A /* TodoListHeaderView.swift in Sources */,
-				D0E59F672EC8C39100BE4811 /* TodoList.xcdatamodeld in Sources */,
-				D0E59F692EC8EA8900BE4811 /* TodoItem.swift in Sources */,
 				D02CB0722EAF8EE800DFE9F4 /* AppDelegate.swift in Sources */,
+				D04E5FBF2ECA474D00A91629 /* TodoItem +CoreDataClass.swift in Sources */,
+				D04E5FBD2ECA404A00A91629 /* TodoItem.xcdatamodeld in Sources */,
 				D02CB0742EAF8EE800DFE9F4 /* SceneDelegate.swift in Sources */,
 				D038F4052EC207A8002AFCD9 /* PersistenceController.swift in Sources */,
 				D067B9A92EBA4D490057F11B /* TodoToggle.swift in Sources */,
 				D0E59F6B2EC8EADD00BE4811 /* TodoItemTableViewCell.swift in Sources */,
+				D04E5FC12ECA476D00A91629 /* TodoItem+CoreDataProperties.swift in Sources */,
 				D06759A52EB8CF6900FF026F /* TodoDetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -419,13 +423,13 @@
 /* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
-		D0E59F652EC8C39100BE4811 /* TodoList.xcdatamodeld */ = {
+		D0E59F652EC8C39100BE4811 /* TodoItem.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
 				D0E59F662EC8C39100BE4811 /* TodoItem.xcdatamodel */,
 			);
 			currentVersion = D0E59F662EC8C39100BE4811 /* TodoItem.xcdatamodel */;
-			path = TodoList.xcdatamodeld;
+			path = TodoItem.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

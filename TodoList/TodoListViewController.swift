@@ -16,11 +16,6 @@ class TodoListViewController : UIViewController {
     
     var todoEntities: [TodoItemEntity] = []
     
-    var todoItems: [TodoItem] = [
-        .init(name:"Купить сыр"),
-        .init(name:"Банальные, но неопровержимые выводы, а также акционеры крупнейших компаний и по"),
-        .init(name: "Задание")
-    ]
     
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .insetGrouped)
@@ -33,8 +28,8 @@ class TodoListViewController : UIViewController {
     } ()
     
     lazy var addButton : UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: "Plus"), for: .normal)
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(systemName: "plus"), for: .normal)
         button.tintColor = .white
         button.backgroundColor = .systemBlue
         button.layer.cornerRadius = 36/2
@@ -145,11 +140,13 @@ class TodoListViewController : UIViewController {
     }
     
     
-    func presentDetailScreen( _ item: TodoItem? = nil) {
+    func presentDetailScreen( _ item: TodoItemEntity? = nil) {
         let vc = TodoDetailViewController()
         vc.todoItem = item
+        vc.context = context
+        
         vc.onFinish = { newItem in
-            self.todoItems.append(newItem)
+            self.todoEntities.append(newItem)
             self.tableView.reloadData()
         }
         let nc = UINavigationController(rootViewController: vc)
@@ -157,37 +154,37 @@ class TodoListViewController : UIViewController {
         
     }
     
-    // HOME WORK
+    // HOMEWORK
     
-    //  func addTodoItem() {
-    //    let alert = UIAlertController(title: "New TodoItem", message: nil, preferredStyle: .alert)
-    //    alert.addTextField { $0.placeholder = "Enter text" }
-    //    alert.addAction(UIAlertAction(title: "Add", style: .default, handler: { _ in
-    //        guard let text = alert.textFields?.first?.text, !text.isEmpty else { return }
-    //        PersistenceController.shared.todoEntities(text: text)
-    //        self.todoEntities = PersistenceController.shared.fetchTodos()
-    //        self.tableView.reloadData()
-    //    } ))
-    //
-    //    alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-    //    present(alert, animated: true)
-    //}
-    //
-    //
-    //
-    //func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle,
-    //               forRowAt indexPath: IndexPath) {
-    //    if editingStyle == .delete {
-    //        let entity = todoEntities[indexPath.row]
-    //
-    //        // Удаляем из Core Data
-    //        PersistenceController.shared.delete(todo: todoEntities)
-    //
-    //        // Удаляем из массива для UI
-    //        todoEntities.remove(at: indexPath.row)
-    //        tableView.deleteRows(at: [indexPath], with: .automatic)
-    //    }
-    //}
+//      func addTodoItem() {
+//        let alert = UIAlertController(title: "New TodoItem", message: nil, preferredStyle: .alert)
+//        alert.addTextField { $0.placeholder = "Enter text" }
+//        alert.addAction(UIAlertAction(title: "Add", style: .default, handler: { _ in
+//            guard let text = alert.textFields?.first?.text, !text.isEmpty else { return }
+//            TodoListStore.todo(text: text)
+//            self.todoEntities = PersistenceController.shared.fetchTodos()
+//            self.tableView.reloadData()
+//        } ))
+//
+//        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+//        present(alert, animated: true)
+//    }
+//
+//
+//
+//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle,
+//                   forRowAt indexPath: IndexPath) {
+//        if editingStyle == .delete {
+//            let entity = todoEntities[indexPath.row]
+//
+//            // Удаляем из Core Data
+//            TodoListStore.delete(TodoItemEntity)
+//
+//            // Удаляем из массива для UI
+//            todoEntities.remove(at: indexPath.row)
+//            tableView.deleteRows(at: [indexPath], with: .automatic)
+//        }
+//    }
     //
     ///
     ///
@@ -207,13 +204,13 @@ class TodoListViewController : UIViewController {
     //        }
     //    }
     //
-    //    TodoListStore.toggleDone(todoEntities[indexPath.row])
-    //    tableView.reloadRows(at: [indexPath], with: .automatic)
-    //
-    //    let newTodo = TodoListStore.createTodo(name: "Новая заметка")
-    //    todoEntities.append(newTodo)
-    //    tableView.reloadData()
-    
+//        TodoListStore.toggleDone(todoEntities[indexPath.row])
+//        tableView.reloadRows(at: [indexPath], with: .automatic)
+//
+//        let newTodo = TodoListStore.createTodo(name: "Новая заметка")
+//    todoItem.append(newTodo)
+//        tableView.reloadData()
+//
     
     @objc func addTapped()  {
         presentDetailScreen()
@@ -250,7 +247,7 @@ class TodoListViewController : UIViewController {
             
             func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
                 let view  = tableView.dequeueReusableHeaderFooterView( withIdentifier: "my header") as! TodoListHeaderView
-                view.updateTaskCount( count: todoItems.count)
+                view.updateTaskCount( count: todoEntities.count)
                 return view
             }
         }

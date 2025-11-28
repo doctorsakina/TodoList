@@ -12,7 +12,7 @@ class TodoToggle: UITableViewCell, UITextViewDelegate {
 
     let placeholderText = "Something needs to be done..."
 
-    let textView = UITextView()   // <-- вот так правильно
+    let textView = UITextView()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -39,7 +39,15 @@ class TodoToggle: UITableViewCell, UITextViewDelegate {
 
         contentView.addSubview(textView)
     }
+    
+    func getText() -> String? {
+        return textView.text
+    }
 
+    func setText(_ text: String) {
+        textView.text = text
+    }
+    
     private func setupConstraints() {
         textView.snp.makeConstraints { make in
             make.edges.equalToSuperview().inset(16)

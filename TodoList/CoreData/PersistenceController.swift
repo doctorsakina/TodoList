@@ -7,15 +7,16 @@
 
 import Foundation
 import CoreData
+import UIKit
 
 class PersistenceController {
-
+    
     static let shared = PersistenceController()
-
+    
     let container: NSPersistentContainer
-
+    
     init(inMemory: Bool = false) {
-        container = NSPersistentContainer(name: "TodoList")
+        container = NSPersistentContainer(name: "TodoItem")
         if inMemory {
             container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
         }
@@ -27,19 +28,8 @@ class PersistenceController {
         container.viewContext.automaticallyMergesChangesFromParent = true
         container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
     }
-
+    
     var viewContext: NSManagedObjectContext {
         return container.viewContext
-    }
-
-    func saveContext() {
-        let context = viewContext
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                print("Core Data save error: \(error)")
-            }
-        }
     }
 }

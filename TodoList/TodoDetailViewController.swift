@@ -7,14 +7,18 @@
 
 import UIKit
 import SnapKit
+import CoreData
 
 
 final class TodoDetailViewController: UIViewController {
     
-    var todoItem: TodoItem?
+    var todoItem: TodoItemEntity?
+    var context: NSManagedObjectContext!
+    var onFinish: ((TodoItemEntity) -> Void)?
     
-       var onFinish: ((TodoItem) -> Void)?
-
+    private var selectedDate: Date?
+    private var importance: Int = 1 // 0: низкая, 1: обычная, 2: высокая
+    
     // MARK: -UI
     
     lazy var tableView: UITableView = {
@@ -34,6 +38,9 @@ final class TodoDetailViewController: UIViewController {
         super.viewDidLoad()
         configureNavigationBar()
         makeConstraints()
+        loadTodoItemData()
+        cancelButtonTraped()
+        
     }
     
     
@@ -51,34 +58,121 @@ final class TodoDetailViewController: UIViewController {
         }
     }
     
+    private func loadTodoItemData() {
+        if todoItem != nil {
+            // Загружаем существующие данные
+            // importance = todoItem.importance
+            // selectedDate = todoItem.deadline
+        }
+    }
+    
     
     @objc func cancelButtonTraped() {
         dismiss(animated:true)
     }
     
-    @objc func saveButtonTapped() {
-        //TODO: Save task
-    }
-}
-
-
-extension TodoDetailViewController : UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
+//    @objc func saveButtonTapped() {
+//        guard let textCell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? TodoToggle,
+//              let taskText = textCell.getText(), !taskText.trimmingCharacters(in: .whitespaces).isEmpty else {
+//            showAlert(message: "Введите название задачи")
+//            return
+//        }
+//
+//        saveTodoItem(name: taskText)
+     //   dismiss(animated: true)
+   // }
+    //
+    //    private func saveTodoItem(name: String) {
+    //        if let todoItem = todoItem {
+    //            todoItem.name = name
+    //            todoItem.deadline = selectedDate
+    //        } else {
+    //            let newTodoItem = TodoItem(context: context)
+    //            newTodoItem.name = name
+    //            newTodoItem.isCompleted = false
+    //            newTodoItem.createdAt = Date()
+    //            newTodoItem.deadline = selectedDate
+    //        }
+    //
+    //        do {
+    //            try context.save()
+    //        } catch {
+    //            print("Error saving: \(error)")
+    //        }
+    //    }
+    //
+    // остальной код сохранения...
+    //    private func saveTodoItem(name: String) {
+    //        if let todoItem = todoItem {
+    //            todoItem.name = name
+    //            todoItem.deadline = selectedDate
+    //        } else {
+    //            let newTodoItem = TodoItem(context: context)
+    //            newTodoItem.name = name
+    //            newTodoItem.isCompleted = false
+    //            newTodoItem.createdAt = Date()
+    //            newTodoItem.deadline = selectedDate
+    //        }
+    //
+    //        do {
+    //            try context.save()
+    //            print("✅ Todo item saved successfully")
+    //        } catch {
+    //            print("❌ Error saving: \(error)")
+    //            showAlert(message: "Ошибка сохранения")
+    //        }
+    //    }
+    
+//    private func showAlert(message: String) {
+//        let alert = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
+//        alert.addAction(UIAlertAction(title: "OK", style: .default))
+//        present(alert, animated: true)
+//    }
     
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell (withIdentifier: "text view cell", for: indexPath) as! TodoToggle
-        cell.selectionStyle = .none
-        return cell
-    }
+    //
+    //@objc func saveButtonTapped(_ sender: UIButton) {
+    //    print("Save button tapped") // Добавьте для отладки
+    //
+    //    guard let name = nameTextField.text, !name.isEmpty else {
+    //        showAlert(message: "Введите название задачи")
+    //        return
+    //    }
+    //
+    //    saveTodoItem(name: name)
+    //    dismiss(animated: true)
+    //}
+    //
+    //    private func saveTodoItem(name: String) {
+    //        // Если редактируем существующую задачу
+    //        if let todoItem = todoItem {
+    //            todoItem.name = name
+    //            todoItem.isCompleted = todoItem.isCompleted // сохраняем текущий статус
+    //        } else {
+    //            // Если создаем новую задачу
+    //            let newTodoItem = todoItem(context: context)
+    //            newTodoItem.name = name
+    //            newTodoItem.isCompleted = false
+    //            newTodoItem.createdAt = Date()
+    //        }
+    //    }
+    //}
 }
-
-
-extension TodoDetailViewController : UITableViewDelegate {
-   
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 150
+    extension TodoDetailViewController : UITableViewDataSource {
+        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+            return 1
+        }
+        
+        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+            let cell = tableView.dequeueReusableCell (withIdentifier: "text view cell", for: indexPath) as! TodoToggle
+            cell.selectionStyle = .none
+            return cell
+        }
     }
- }
+    
+    extension TodoDetailViewController : UITableViewDelegate {
+        
+        func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+            return 150
+        }
+    }
